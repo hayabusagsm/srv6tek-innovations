@@ -1,0 +1,106 @@
+# ==============================================================================
+# JUNIPER cRPD UNIFIED JINJA2 MULTI-TECHNOLOGY CORE TEMPLATE
+# Node: {{ node.node_id }} | AS: {{ node.asn }} | Platform: Juniper cRPD
+# ==============================================================================
+
+system {
+    host-name {{ node.node_id }};
+}
+
+routing-options {
+    router-id 10.0.0.{{ node.node_num }};
+    
+    {# --- Real-World Aggregation Anchor Blocks --- #}
+    {% if node.role == "PE" %}
+    static {
+        route {{ node.as_info.v4_agg }} discard;
+        route {{ node.as_info.v6_agg }} discard;
+    }
+    {% endif %}
+}
+
+{# --- Policy Options mapping our communities and real-world network statements --- #}
+policy-options {
+    policy-statement POLICY_ATTACH_CARRIER_COMMUNITIES {
+        then {
+            community add COMM_PRIMARY;
+            community add COMM_BACKUP;
+            accept;
+        }
+    }
+    community COMM_PRIMARY members {{ node.as_info.primary_comm }};
+    community COMM_BACKUP members {{ node.as_info.backup_comm }};
+}
+
+interfaces {
+    lo0 {
+        unit 0 {
+            family inet6 {
+                address {{ node.loopback0 }}/128;
+            }
+            family iso {
+                address {{ node.nsap }};
+            }
+        }
+    }
+    {% for intf in node.interfaces %}
+    {{ intf.name }} {
+        description "{{ intf.desc }}";
+        unit 0 {
+            family inet6;
+            family iso;
+        }
+    }
+    {% endfor %}
+}
+
+protocols {
+    isis {
+        level 2 {
+            wide-metrics-only;
+        }
+        {% for intf in node.interfaces %}
+        interface {{ intf.name }}.0 {
+            bfd-liveness-detection {
+                minimum-interval 150;
+                multiplier 3;
+            }
+        }
+        {% endfor %}
+        interface lo0.0;
+    }
+    
+    bgp {
+        {% if node.role == "PE" %}
+        # RPKI Cache Session definition targeting the host Routinator receiver
+        validation {
+            group ROUTINATOR-CACHE {
+                session {{ node.routinator_ip }} {
+                    port 323;
+                    refresh-time 30;
+                }
+            }
+        }
+        
+        group RR-CLUSTER-PEERS {
+            type internal;
+            local-address {{ node.loopback0 }};
+            autonomous-system {{ node.asn }};
+            export POLICY_ATTACH_CARRIER_COMMUNITIES;
+            family inet {
+                unicast {
+                    aigp;
+                }
+            }
+            family inet-vpn {
+                unicast {
+                    aigp;
+                }
+            }
+            {% for peer in node.rr_peers %}
+            neighbor {{ peer }};
+            {% endfor %}
+        }
+        {% endif %}
+    }
+}

@@ -1,0 +1,149 @@
+! ==============================================================================
+! CISCO IOS-XRd UNIFIED JINJA2 TEMPLATE WITH AGGREGATION & RPKI ANCHORS
+! Node: {{ node.node_id }} | AS: {{ node.asn }} | Platform: Cisco XRd
+! ==============================================================================
+hostname {{ node.node_id }}
+
+interface Loopback0
+ description Baseline_Core_Router_ID
+ ipv6 address {{ node.loopback0 }}/128
+!
+
+{# --- Real-World Aggregation Anchor Blocks --- #}
+{% if node.role == "PE" %}
+router static
+ address-family ipv4 unicast
+  {{ node.as_info.v4_agg }} Null0 description Carrier_Aggregate_Anchor_Route
+ !
+ address-family ipv6 unicast
+  {{ node.as_info.v6_agg }} Null0 description Carrier_Aggregate_Anchor_Route
+ !
+!
+
+{# --- BGP Route Policy (RPL) attaching Real and Backup Communities --- #}
+route-policy RPL_ATTACH_CARRIER_COMMUNITIES
+  set community ({{ node.as_info.primary_comm }}, {{ node.as_info.backup_comm }}) additive
+  pass
+end-policy
+!
+{% endif %}
+
+{# --- Physical Interface Layer --- #}
+{% for intf in node.interfaces %}
+interface {{ intf.name | replace('eth', 'GigabitEthernet0/0/0/') }}
+ description {{ intf.desc }}
+ ipv6 enable
+!
+{% endfor %}
+
+{# --- Transport Plane Activation Blocks --- #}
+{% if node.tech == 'srv6' and node.role in ["P", "PE"] %}
+segment-routing
+ srv6
+  locators
+   locator MAIN
+    prefix {{ node.locators.main }} micro-segment behavior uSID
+   !
+  !
+ !
+!
+{% elif node.tech == 'mpls-ldp' and node.role in ["P", "PE"] %}
+mpls ldp
+ router-id {{ node.loopback0 }}
+ {% for intf in node.interfaces %}
+ interface {{ intf.name | replace('eth', 'GigabitEthernet0/0/0/') }}
+ !
+ {% endfor %}
+!
+{% endif %}
+
+{# --- Core IS-IS Multi-Topology Layout --- #}
+router isis CORE-UNDERLAY
+ net {{ node.node_num }}
+ is-type level-2-only
+ bgp router-id Loopback0
+ address-family ipv6 unicast
+  multi-topology
+  metric-style wide
+  {% if node.tech == 'srv6' %}
+  segment-routing srv6
+   locator MAIN
+  !
+  {% endif %}
+ !
+ interface Loopback0
+  address-family ipv6 unicast
+  !
+ !
+ {% for intf in node.interfaces %}
+ interface {{ intf.name | replace('eth', 'GigabitEthernet0/0/0/') }}
+  bfd fast-detect
+  address-family ipv6 unicast
+  !
+ !
+ {% endfor %}
+!
+
+{# --- Carrier BGP Layer & RPKI Routinator Cache Session Setup --- #}
+router bgp {{ node.asn }}
+ bgp router-id {{ node.loopback0 }}
+ 
+ {# Native RPKI Routinator Session Mapping Anchor #}
+ {% if node.role == "PE" %}
+ rpki server {{ node.routinator_ip }}
+  port 323
+  refresh-time 30
+  ! -- Note: ROV validation triggers remain inactive until ExaBGP injection completes --
+ !
+ {% endif %}
+
+ address-family vpnv4 unicast
+  aigp send
+ !
+ address-family vpnv6 unicast
+  aigp send
+ !
+ address-family ipv4 unicast
+  network {{ node.as_info.v4_agg }} route-policy RPL_ATTACH_CARRIER_COMMUNITIES
+ !
+ address-family ipv6 unicast
+  network {{ node.as_info.v6_agg }} route-policy RPL_ATTACH_CARRIER_COMMUNITIES
+ !
+
+ {% if node.role == "PE" %}
+ neighbor-group RR-CLUSTER
+  remote-as {{ node.asn }}
+  update-source Loopback0
+  bfd fast-detect
+  address-family vpnv4 unicast
+   aigp enable
+  !
+  address-family vpnv6 unicast
+   aigp enable
+  !
+ 
+ {% for peer in node.rr_peers %}
+ neighbor {{ peer }}
+  use neighbor-group RR-CLUSTER
+  description Peering_to_OOP_Route_Reflector
+ !
+ {% endfor %}
+ {% endif %}
+
+ {# Route Reflector Engine --- #}
+ {% if node.role == "RR" %}
+ address-family vpnv4 unicast
+  optimal-route-reflection igp isis CORE-UNDERLAY
+ !
+ address-family vpnv6 unicast
+  optimal-route-reflection igp isis CORE-UNDERLAY
+ !
+ neighbor-group CLIENT-EDGE-PEERS
+  remote-as {{ node.asn }}
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-reflector-client
+   optimal-route-reflection client
+  !
+ {% endif %}
+!
