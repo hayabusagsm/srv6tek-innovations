@@ -1,0 +1,498 @@
+! ==============================================================================
+! CISCO IOS-XRd MASTER BLUEPRINT - PART A (SYSTEM, ROUTING POLICIES, & IS-IS INTERFACES)
+! Node: {{ node.node_id }} | AS: {{ node.asn }} | Technology: {{ node.tech }}
+! ==============================================================================
+hostname {{ node.node_id }}
+
+username cisco
+ group root-lr
+ group cisco-support
+ secret 10 $6$GXFSDMYr1txD....$09ETAo1VMaFVXEu9HMDuV9y8fpXbZIHhgWe8nqvxotAaOOaTCxsC8QBzp3g1aVHFZUOtPuLFeLOaL.XsIpQHw.
+!
+username admin
+ group root-lr
+ secret 10 $6$GXFSDMYr1txD....$09ETAo1VMaFVXEu9HMDuV9y8fpXbZIHhgWe8nqvxotAaOOaTCxsC8QBzp3g1aVHFZUOtPuLFeLOaL.XsIpQHw.
+!
+
+{% if node.role == "PE" %}
+vrf red
+ address-family ipv4 unicast
+  import route-target 1:1
+  export route-target 1:1
+ !
+ address-family ipv6 unicast
+  import route-target 1:1
+  export route-target 1:1
+ !
+!
+vrf green
+ address-family ipv4 unicast
+  import route-target 2:2
+  export route-target 2:2
+ !
+ address-family ipv6 unicast
+  import route-target 2:2
+  export route-target 2:2
+ !
+!
+vrf blue
+ address-family ipv4 unicast
+  import route-target 3:3
+  export route-target 3:3
+ !
+ address-family ipv6 unicast
+  import route-target 3:3
+  export route-target 3:3
+ !
+!
+{% if node.tech == "srv6" %}
+vrf main
+ address-family ipv4 unicast
+  import route-target 4:4
+  export route-target 4:4
+ !
+ address-family ipv6 unicast
+  import route-target 4:4
+  export route-target 4:4
+ !
+!
+{% endif %}
+{% endif %}
+
+extcommunity-set rt red-rt-set_v4
+  1:1
+end-set
+!
+extcommunity-set rt red-rt-set_v6
+  1:1
+end-set
+!
+extcommunity-set rt green-rt-set_v4
+  2:2
+end-set
+!
+extcommunity-set rt green-rt-set_v6
+  2:2
+end-set
+!
+extcommunity-set rt blue-rt-set_v4
+  3:3
+end-set
+!
+extcommunity-set rt blue-rt-set_v6
+  3:3
+end-set
+!
+{% if node.tech == "srv6" %}
+extcommunity-set rt main-rt-set_v4
+  4:4
+end-set
+!
+extcommunity-set rt main-rt-set_v6
+  4:4
+end-set
+!
+{% endif %}
+
+extcommunity-set opaque COLOR_V4_10
+  10
+end-set
+!
+extcommunity-set opaque COLOR_V4_20
+  20
+end-set
+!
+extcommunity-set opaque COLOR_V4_30
+  30
+end-set
+!
+extcommunity-set opaque COLOR_V4_40
+  40
+end-set
+!
+extcommunity-set opaque COLOR_V6_100
+  100
+end-set
+!
+extcommunity-set opaque COLOR_V6_200
+  200
+end-set
+!
+extcommunity-set opaque COLOR_V6_300
+  300
+end-set
+!
+extcommunity-set opaque COLOR_V6_400
+  400
+end-set
+!
+
+route-policy pass
+  pass
+end-policy
+!
+route-policy drop
+  drop
+end-policy
+!
+
+route-policy SET_COLOR_ALL_VPNV4
+  if extcommunity rt matches-any red-rt-set_v4 then
+    set extcommunity color COLOR_V4_10
+  elseif extcommunity rt matches-any green-rt-set_v4 then
+    set extcommunity color COLOR_V4_20
+  elseif extcommunity rt matches-any blue-rt-set_v4 then
+    set extcommunity color COLOR_V4_30
+  {% if node.tech == "srv6" %}
+  elseif extcommunity rt matches-any main-rt-set_v4 then
+    set extcommunity color COLOR_V4_40
+  {% endif %}
+  else
+    pass
+  endif
+end-policy
+!
+
+route-policy SET_COLOR_ALL_VPNV6
+  if extcommunity rt matches-any red-rt-set_v6 then
+    set extcommunity color COLOR_V6_100
+  elseif extcommunity rt matches-any green-rt-set_v6 then
+    set extcommunity color COLOR_V6_200
+  elseif extcommunity rt matches-any blue-rt-set_v6 then
+    set extcommunity color COLOR_V6_300
+  {% if node.tech == "srv6" %}
+  elseif extcommunity rt matches-any main-rt-set_v6 then
+    set extcommunity color COLOR_V6_400
+  {% endif %}
+  else
+    pass
+  endif
+end-policy
+!
+
+ssh server rate-limit 600
+ssh server session-limit 100
+ssh server v2
+ssh server vrf default
+ssh server netconf vrf default
+netconf-yang agent
+ssh
+!
+cdp
+grpc
+ port 57400
+ no-tls
+ address-family ipv4
+ service-layer
+!
+
+interface Loopback0
+ description Baseline_Core_Router_ID
+ ipv6 address {{ node.loopback0 }}/128
+!
+
+{% for intf in node.interfaces %}
+interface {{ intf.name | replace('eth', 'GigabitEthernet0/0/0/') }}
+ description {{ intf.desc }}
+ {% if node.topo == "internet-sim" %}
+  ipv4 address {{ intf.v4_ip }}
+  ipv6 address {{ intf.v6_ip }}
+ {% else %}
+  ipv6 enable
+ {% endif %}
+!
+{% endfor %}
+
+router isis CORE-UNDERLAY
+ is-type level-2-only
+ net {{ node.nsap }}
+ distribute link-state level 2
+ nsf ietf
+ log adjacency changes
+ lsp-gen-interval initial-wait 5 secondary-wait 150 maximum-wait 2000
+ lsp-refresh-interval 65000
+ max-lsp-lifetime 65535
+ router-id Loopback0
+ redistribute connected
+ address-family ipv6 unicast
+  metric-style wide
+  microloop avoidance segment-routing
+  microloop avoidance rib-update-delay 10000
+  advertise link attributes
+  maximum-paths 32
+  {% if node.tech == 'srv6' %}
+  segment-routing srv6
+   locator MAIN
+   locator LATENCY_1
+   locator LATENCY_2
+   locator LATENCY_3
+  !
+  {% endif %}
+ !
+ affinity-map red bit-position 1
+ affinity-map green bit-position 2
+ affinity-map blue bit-position 3
+ !
+ flex-algo 128
+  metric-type delay
+  advertise-definition
+ !
+ flex-algo 129
+  metric-type delay
+  advertise-definition
+ !
+ flex-algo 130
+  metric-type delay
+  advertise-definition
+ !
+ interface Loopback0
+  passive
+  address-family ipv6 unicast
+  !
+ !
+ {% for intf in node.interfaces %}
+ interface {{ intf.name | replace('eth', 'GigabitEthernet0/0/0/') }}
+  circuit-type level-2-only
+  point-to-point
+  hello-padding disable
+  affinity flex-algo red green blue
+  address-family ipv6 unicast
+   fast-reroute per-prefix ti-lfa
+   metric 1
+   {# Programmatic Static Subsea Cable Latency Injection via IS-IS #}
+   {% if node.topo in ['mega-internet', 'tier-2-emea', 'tier-2-apac', 'tier-1'] %}
+    advertise application link-delay
+    application link-delay
+     {# Injecting 45,000 microseconds (45ms) static subsea delta #}
+     delay static 45000
+    !
+   {% endif %}
+  !
+ !
+ {% endfor %}
+!
+{# --- CISCO IOS-XRd MASTER BLUEPRINT - PART B (SR-PM, TE FORWARDING ADJACENCY, & BGP) --- #}
+
+{# --- Activation Plane for Performance Measurement (SR-PM) --- #}
+{% if node.tech == 'srv6' or node.tech == 'sr-mpls' %}
+performance-measurement
+ interface
+  {% for intf in node.interfaces %}
+  interface {{ intf.name | replace('eth', 'GigabitEthernet0/0/0/') }}
+   delay-measurement
+    advertise-delay 1000
+    sub-delay-strategy static
+   !
+  !
+  {% endfor %}
+ !
+!
+{% endif %}
+
+{% if node.tech == 'srv6' %}
+segment-routing
+ global-block 100000 163999
+ srv6
+  encapsulation
+   source-address {{ node.loopback0 }}
+  !
+  locators
+   locator MAIN
+    micro-segment behavior unode psp-usd
+    prefix {{ node.locators.main }}
+   !
+   locator LATENCY_1
+    micro-segment behavior unode psp-usd
+    prefix {{ node.locators.red }}
+    algorithm 128
+   !
+   locator LATENCY_2
+    micro-segment behavior unode psp-usd
+    prefix {{ node.locators.green }}
+    algorithm 129
+   !
+   locator LATENCY_3
+    micro-segment behavior unode psp-usd
+    prefix {{ node.locators.blue }}
+    algorithm 130
+   !
+  !
+ !
+!
+{% elif node.tech == 'sr-mpls' %}
+segment-routing
+ global-block 100000 163999
+!
+router isis CORE-UNDERLAY
+ address-family ipv6 unicast
+  segment-routing mpls
+ !
+ interface Loopback0
+  address-family ipv6 unicast
+   prefix-sid index {{ node.label_index }}
+  !
+ !
+!
+{% elif node.tech == 'mpls-ldp' or node.tech == 'rsvp-te' %}
+mpls oam
+!
+mpls ldp
+ router-id {{ node.loopback0 }}
+ {% for intf in node.interfaces %}
+ interface {{ intf.name | replace('eth', 'GigabitEthernet0/0/0/') }}
+ !
+ {% endfor %}
+!
+{% if node.tech == 'rsvp-te' %}
+! --- RSVP Traffic Engineering with Forwarding Adjacency Shortcuts ---
+router isis CORE-UNDERLAY
+ address-family ipv4 unicast
+  traffic-engineering tunnel-signaling rsvp-te
+  traffic-engineering forwarding-adjacency
+ !
+!
+interface Tunnel-TE100
+ vrf red
+ ipv4 unnumbered Loopback0
+ destination {{ node.loopback0 | replace('::1', '::2') }}
+ path-option 10 dynamic
+ autoroute announce
+!
+{% endif %}
+{% endif %}
+
+router bgp {{ node.asn }}
+ bgp router-id 10.0.0.{{ node.node_num }}
+ bgp bestpath as-path multipath-relax
+ 
+ {% if node.role == "PE" %}
+ rpki server {{ node.routinator_ip }}
+  port 323
+  refresh-time 30
+ !
+ {% endif %}
+
+ address-family ipv4 unicast
+  additional-paths receive
+  maximum-paths ebgp 32
+ !
+ address-family ipv6 unicast
+  additional-paths receive
+  maximum-paths ebgp 32
+ !
+ address-family vpnv4 unicast
+  retain route-target all
+  aigp send
+ !
+ address-family vpnv6 unicast
+  retain route-target all
+  aigp send
+ !
+ address-family link-state link-state
+ !
+
+ {% if node.role == "PE" %}
+ vrf red
+  rd {{ node.asn }}:1
+  address-family ipv4 unicast
+   {% if node.tech == "srv6" %}
+   segment-routing srv6
+    locator LATENCY_1
+    alloc mode per-vrf
+   !
+   {% endif %}
+   redistribute connected
+  !
+ !
+ vrf green
+  rd {{ node.asn }}:2
+  address-family ipv4 unicast
+   {% if node.tech == "srv6" %}
+   segment-routing srv6
+    locator LATENCY_2
+    alloc mode per-vrf
+   !
+   {% endif %}
+   redistribute connected
+  !
+ !
+ vrf blue
+  rd {{ node.asn }}:3
+  address-family ipv4 unicast
+   {% if node.tech == "srv6" %}
+   segment-routing srv6
+    locator LATENCY_3
+    alloc mode per-vrf
+   !
+   {% endif %}
+   redistribute connected
+  !
+ !
+ {% if node.tech == "srv6" %}
+ vrf main
+  rd {{ node.asn }}:4
+  address-family ipv4 unicast
+   segment-routing srv6
+    locator MAIN
+    alloc mode per-vrf
+   !
+   redistribute connected
+  !
+ !
+ {% endif %}
+ {% endif %}
+
+ neighbor-group ebgp-v6
+  egress-engineering
+  address-family vpnv4 unicast
+   route-policy SET_COLOR_ALL_VPNV4 out
+   next-hop-unchanged
+  !
+  address-family vpnv6 unicast
+   route-policy SET_COLOR_ALL_VPNV6 out
+   next-hop-unchanged
+  !
+ !
+
+ neighbor-group ibgp-core-cluster
+  remote-as {{ node.asn }}
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-policy SET_COLOR_ALL_VPNV4 out
+  !
+  address-family vpnv6 unicast
+   route-policy SET_COLOR_ALL_VPNV6 out
+  !
+  address-family link-state link-state
+   route-policy drop in
+   route-policy pass out
+  !
+ !
+
+ {% if node.role == "PE" %}
+ {% for peer in node.rr_peers %}
+ neighbor {{ peer }}
+  use neighbor-group ibgp-core-cluster
+ !
+ {% endfor %}
+ {% endif %}
+
+telemetry model-driven
+ destination-group jalapeno
+  address-family ipv4 10.251.254.199 port 32400
+  encoding self-describing-gpb
+  protocol grpc no-tls
+ !
+ sensor-group openconfig_interfaces
+  sensor-path openconfig-interfaces:interfaces/interface
+ !
+ sensor-group srv6_telemetry
+  sensor-path Cisco-IOS-XR-segment-routing-srv6-oper:srv6/locators/locator
+ !
+ subscription base_metrics
+  sensor-group-id openconfig_interfaces sample-interval 10000
+  sensor-group-id srv6_telemetry sample-interval 10000
+  destination-id jalapeno
+  source-interface MgmtEth0/RP0/CPU0/0
+ !
+!

@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""
+SRv6TEK Innovations - Final Turnkey Manifest Assembler
+Glues existing node and topology script fragments into production-ready Containerlab manifests.
+Supports: all-cisco, all-juniper, and vendor-mix across 4 transport options.
+"""
+
+import os
+import subprocess
+
+# ==============================================================================
+# 🎛️ USER CONFIGURATION INPUTS
+# ==============================================================================
+TOPO_NAME = "internet-sim"
+MGMT_NET = "mgt_net"
+MGMT_V4_SUBNET = "172.20.20.0/24"
+MGMT_V6_SUBNET = "2001:172:20:20::/80"
+
+# Official Docker Image Registry Paths
+IMG_CISCO = "ios-xr/xrd-control-plane:25.2.2"
+IMG_JUNIPER_EVO = "cjunosevolved:25.4r1.13-evo"
+IMG_JUNIPER_CRPD = "crpd:25.4R1.12"
+
+# Permutations to construct automatically
+TECHNOLOGIES = ["srv6", "sr-mpls", "mpls-ldp", "rsvp-te"]
+LAYOUTS = ["cisco", "juniper", "mix"]
+
+def run_local_fragment_generators():
+    """Runs your existing, pre-built node and topology scripts locally to refresh data."""
+    print("⏳ Running your existing local algorithmic builders...")
+    
+    # Dynamically find your existing node script inside this directory context
+    node_script = [f for f in os.listdir('.') if f.endswith('nodes.py')][0]
+    # Dynamically find your existing topology script inside this directory context
+    topo_script = [f for f in os.listdir('.') if f.endswith('topo.py')][0]
+    
+    print(f"  ↳ Executing: {node_script}")
+    subprocess.run(["python3", node_script], check=True)
+    
+    print(f"  ↳ Executing: {topo_script}")
+    subprocess.run(["python3", topo_script], check=True)
+
+def parse_txt_fragment(filename):
+    """Reads the generated fragments on your drive into memory list lines safely."""
+    lines = []
+    if os.path.exists(filename):
+        with open(filename, "r") as f:
+            for line in f:
+                lines.append(line.rstrip())
+    return lines
+
+def assemble_manifest_matrix():
+    # 1. First, execute your existing python files to generate 'nodes.yaml' and 'topology.yaml' fragments
+    run_local_fragment_generators()
+    
+    # 2. Parse the raw calculated text blocks into memory arrays
+    raw_nodes = parse_txt_fragment("nodes.yaml")
+    raw_links = parse_txt_fragment("topology.yaml")
+    
+    print("🪡 Stitching segments together against your Docker imaging parameters...")
+    
+    for tech in TECHNOLOGIES:
+        for layout in LAYOUTS:
+            # 3. Formulate your Global Parameter Header Section
+            manifest = [
+                f"# ==============================================================================",
+                f"# SRv6TEK Innovations - Final Unified Production Topology Manifest",
+                f"# Topology: {TOPO_NAME.upper()} | Technology: {tech.upper()} | Profile: {layout.upper()}",
+                f"# ==============================================================================",
+                f"name: srv6tek-{TOPO_NAME}-{layout}-{tech}",
+                f"mgmt:",
+                f"  network: {MGMT_NET}",
+                f"  ipv4-subnet: {MGMT_V4_SUBNET}",
+                f"  ipv6-subnet: {MGMT_V6_SUBNET}\n",
+                f"topology:",
+                f"  kinds:",
+                f"    cisco_xrd:",
+                f"      image: {IMG_CISCO}",
+                f"      restart-policy: \"no\"",
+                f"    juniper_cjunosevolved:",
+                f"      image: {IMG_JUNIPER_EVO}",
+                f"      restart-policy: \"no\"",
+                f"    juniper_crpd:",
+                f"      image: {IMG_JUNIPER_CRPD}",
+                f"      restart-policy: \"no\"\n",
+                f"  nodes:"
+            ]
+            
+            # 4. Process and format every single node injection dynamically
+            for line in raw_nodes:
+                clean_line = line.strip()
+                if not clean_line or clean_line.startswith("#") or "nodes:" in clean_line:
+                    continue
+                
+                # Extract node identity string (e.g., "R1:")
+                node_id = clean_line.split(":")[0].strip()
+                node_num = int(node_id.replace("R", ""))
+                
+                # Calculate explicit management parameters sequentially
+                m_v4 = f"172.20.20.{node_num}"
+                m_v6 = f"2001:172:20:20::{node_num}"
+                
+                # Target the exact shortened configuration filename we established earlier
+                cfg_file = f"compiled-configs/{tech}/{layout}_{node_id}.cfg"
+                
+                # Determine precise hardware kind platform routing rule
+                if layout == "cisco":
+                    kind = "cisco_xrd"
+                elif layout == "juniper":
+                    # SRv6 core roles take heavy Evo image, MPLS tracks and all CEs leverage light cRPD
+                    if tech == "srv6" and (node_num <= 94 or 95 <= node_num <= 107):
+                        kind = "juniper_cjunosevolved"
+                    else:
+                        kind = "juniper_crpd"
+                else: # "mix" -> POPs 1-12 Cisco, 13-23 Juniper split
+                    pop_idx = ((node_num - 1) // 4) + 1 if node_num <= 92 else 1
+                    if pop_idx <= 12 or node_num > 92:
+                        kind = "cisco_xrd"
+                    else:
+                        if tech == "srv6" and (node_num <= 94 or 95 <= node_num <= 107):
+                            kind = "juniper_cjunosevolved"
+                        else:
+                            kind = "juniper_crpd"
+
+                # Build out the Containerlab block
+                manifest.append(f"    {node_id}:")
+                manifest.append(f"      kind: {kind}")
+                manifest.append(f"      mgmt-ipv4: {m_v4}")
+                manifest.append(f"      mgmt-ipv6: {m_v6}")
+                manifest.append(f"      startup-config: {cfg_path if 'cfg_path' in locals() else cfg_file}")
+                
+            # 5. Append the link definitions block
+            manifest.append("\n  links:")
+            for line in raw_links:
+                clean_link = line.strip()
+                if not clean_link or "links:" in clean_link or clean_link.startswith("#"):
+                    continue
+                manifest.append(f"    {line}")
+                
+            # 6. Write out the final assembled manifest file right into this directory
+            output_filename = f"{layout}_{tech}.clab.yaml"
+            with open(output_filename, "w") as mf:
+                mf.write("\n".join(manifest) + "\n")
+                
+    # 7. Tidy up temporary fragment outputs to keep your repository workspace clean
+    for temp_file in ["nodes.yaml", "topology.yaml"]:
+        if os.path.exists(temp_file):
+            os.remove(temp_file)
+            
+    print(f"✨ Manifest Architecture Assembled Successfully! 12 turnkey deployment files created in local folder.")
+
+if __name__ == "__main__":
+    assemble_manifest_matrix()

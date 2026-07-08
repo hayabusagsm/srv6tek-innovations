@@ -1,0 +1,25 @@
+# ==============================================================================
+# SRv6TEK Innovations - Final Unified Production Topology Manifest
+# Topology: INTERNET-SIM | Technology: SR-MPLS | Profile: MIX
+# ==============================================================================
+name: srv6tek-internet-sim-mix-sr-mpls
+mgmt:
+  network: mgt_net
+  ipv4-subnet: 172.20.20.0/24
+  ipv6-subnet: 2001:172:20:20::/80
+
+topology:
+  kinds:
+    cisco_xrd:
+      image: ios-xr/xrd-control-plane:25.2.2
+      restart-policy: "no"
+    juniper_cjunosevolved:
+      image: cjunosevolved:25.4r1.13-evo
+      restart-policy: "no"
+    juniper_crpd:
+      image: crpd:25.4R1.12
+      restart-policy: "no"
+
+  nodes:
+
+  links:

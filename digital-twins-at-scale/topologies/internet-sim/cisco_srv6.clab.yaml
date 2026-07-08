@@ -1,0 +1,431 @@
+# ==============================================================================
+# SRv6TEK Innovations - Final Unified Production Topology Manifest
+# Topology: INTERNET-SIM | Technology: SRV6 | Profile: CISCO
+# ==============================================================================
+name: srv6tek-internet-sim-cisco-srv6
+mgmt:
+  network: mgt_net
+  ipv4-subnet: 172.20.20.0/24
+  ipv6-subnet: 2001:172:20:20::/80
+
+topology:
+  kinds:
+    cisco_xrd:
+      image: ios-xr/xrd-control-plane:25.2.2
+      restart-policy: "no"
+    juniper_cjunosevolved:
+      image: cjunosevolved:25.4r1.13-evo
+      restart-policy: "no"
+    juniper_crpd:
+      image: crpd:25.4R1.12
+      restart-policy: "no"
+
+  nodes:
+    R1:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.1
+      mgmt-ipv6: 2001:172:20:20::1
+      startup-config: compiled-configs/srv6/cisco_R1.cfg
+    R2:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.2
+      mgmt-ipv6: 2001:172:20:20::2
+      startup-config: compiled-configs/srv6/cisco_R2.cfg
+    R3:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.3
+      mgmt-ipv6: 2001:172:20:20::3
+      startup-config: compiled-configs/srv6/cisco_R3.cfg
+    R4:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.4
+      mgmt-ipv6: 2001:172:20:20::4
+      startup-config: compiled-configs/srv6/cisco_R4.cfg
+    R5:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.5
+      mgmt-ipv6: 2001:172:20:20::5
+      startup-config: compiled-configs/srv6/cisco_R5.cfg
+    R6:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.6
+      mgmt-ipv6: 2001:172:20:20::6
+      startup-config: compiled-configs/srv6/cisco_R6.cfg
+    R7:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.7
+      mgmt-ipv6: 2001:172:20:20::7
+      startup-config: compiled-configs/srv6/cisco_R7.cfg
+    R8:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.8
+      mgmt-ipv6: 2001:172:20:20::8
+      startup-config: compiled-configs/srv6/cisco_R8.cfg
+    R9:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.9
+      mgmt-ipv6: 2001:172:20:20::9
+      startup-config: compiled-configs/srv6/cisco_R9.cfg
+    R46:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.46
+      mgmt-ipv6: 2001:172:20:20::46
+      startup-config: compiled-configs/srv6/cisco_R46.cfg
+    R52:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.52
+      mgmt-ipv6: 2001:172:20:20::52
+      startup-config: compiled-configs/srv6/cisco_R52.cfg
+    R58:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.58
+      mgmt-ipv6: 2001:172:20:20::58
+      startup-config: compiled-configs/srv6/cisco_R58.cfg
+    R64:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.64
+      mgmt-ipv6: 2001:172:20:20::64
+      startup-config: compiled-configs/srv6/cisco_R64.cfg
+    R70:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.70
+      mgmt-ipv6: 2001:172:20:20::70
+      startup-config: compiled-configs/srv6/cisco_R70.cfg
+    R76:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.76
+      mgmt-ipv6: 2001:172:20:20::76
+      startup-config: compiled-configs/srv6/cisco_R76.cfg
+    R82:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.82
+      mgmt-ipv6: 2001:172:20:20::82
+      startup-config: compiled-configs/srv6/cisco_R82.cfg
+    R88:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.88
+      mgmt-ipv6: 2001:172:20:20::88
+      startup-config: compiled-configs/srv6/cisco_R88.cfg
+    R90:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.90
+      mgmt-ipv6: 2001:172:20:20::90
+      startup-config: compiled-configs/srv6/cisco_R90.cfg
+    R92:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.92
+      mgmt-ipv6: 2001:172:20:20::92
+      startup-config: compiled-configs/srv6/cisco_R92.cfg
+    R94:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.94
+      mgmt-ipv6: 2001:172:20:20::94
+      startup-config: compiled-configs/srv6/cisco_R94.cfg
+    R96:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.96
+      mgmt-ipv6: 2001:172:20:20::96
+      startup-config: compiled-configs/srv6/cisco_R96.cfg
+    R98:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.98
+      mgmt-ipv6: 2001:172:20:20::98
+      startup-config: compiled-configs/srv6/cisco_R98.cfg
+    R100:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.100
+      mgmt-ipv6: 2001:172:20:20::100
+      startup-config: compiled-configs/srv6/cisco_R100.cfg
+    R102:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.102
+      mgmt-ipv6: 2001:172:20:20::102
+      startup-config: compiled-configs/srv6/cisco_R102.cfg
+    R104:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.104
+      mgmt-ipv6: 2001:172:20:20::104
+      startup-config: compiled-configs/srv6/cisco_R104.cfg
+    R106:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.106
+      mgmt-ipv6: 2001:172:20:20::106
+      startup-config: compiled-configs/srv6/cisco_R106.cfg
+    R116:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.116
+      mgmt-ipv6: 2001:172:20:20::116
+      startup-config: compiled-configs/srv6/cisco_R116.cfg
+    R118:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.118
+      mgmt-ipv6: 2001:172:20:20::118
+      startup-config: compiled-configs/srv6/cisco_R118.cfg
+    R120:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.120
+      mgmt-ipv6: 2001:172:20:20::120
+      startup-config: compiled-configs/srv6/cisco_R120.cfg
+    R122:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.122
+      mgmt-ipv6: 2001:172:20:20::122
+      startup-config: compiled-configs/srv6/cisco_R122.cfg
+    R124:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.124
+      mgmt-ipv6: 2001:172:20:20::124
+      startup-config: compiled-configs/srv6/cisco_R124.cfg
+    R126:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.126
+      mgmt-ipv6: 2001:172:20:20::126
+      startup-config: compiled-configs/srv6/cisco_R126.cfg
+    R127:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.127
+      mgmt-ipv6: 2001:172:20:20::127
+      startup-config: compiled-configs/srv6/cisco_R127.cfg
+    R125:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.125
+      mgmt-ipv6: 2001:172:20:20::125
+      startup-config: compiled-configs/srv6/cisco_R125.cfg
+    TREX_01:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.201
+      mgmt-ipv6: 2001:172:20:20::201
+    TREX_02:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.202
+      mgmt-ipv6: 2001:172:20:20::202
+    TREX_03:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.203
+      mgmt-ipv6: 2001:172:20:20::203
+    TREX_04:
+      kind: cisco_xrd
+      mgmt-ipv4: 172.20.20.204
+      mgmt-ipv6: 2001:172:20:20::204
+
+  links:
+      - endpoints: ["R1:eth1", "R5:eth1"]
+        vars:
+          R1_ipv4: "10.200.1.1/30"
+          R5_ipv4: "10.200.1.2/30"
+          R1_ipv6: "2001:db8:ffff:1::1/64"
+          R5_ipv6: "2001:db8:ffff:1::2/64"
+      - endpoints: ["R1:eth2", "R6:eth1"]
+        vars:
+          R1_ipv4: "10.200.2.1/30"
+          R6_ipv4: "10.200.2.2/30"
+          R1_ipv6: "2001:db8:ffff:2::1/64"
+          R6_ipv6: "2001:db8:ffff:2::2/64"
+      - endpoints: ["R2:eth1", "R6:eth2"]
+        vars:
+          R2_ipv4: "10.200.3.1/30"
+          R6_ipv4: "10.200.3.2/30"
+          R2_ipv6: "2001:db8:ffff:3::1/64"
+          R6_ipv6: "2001:db8:ffff:3::2/64"
+      - endpoints: ["R2:eth2", "R7:eth1"]
+        vars:
+          R2_ipv4: "10.200.4.1/30"
+          R7_ipv4: "10.200.4.2/30"
+          R2_ipv6: "2001:db8:ffff:4::1/64"
+          R7_ipv6: "2001:db8:ffff:4::2/64"
+      - endpoints: ["R3:eth1", "R7:eth2"]
+        vars:
+          R3_ipv4: "10.200.5.1/30"
+          R7_ipv4: "10.200.5.2/30"
+          R3_ipv6: "2001:db8:ffff:5::1/64"
+          R7_ipv6: "2001:db8:ffff:5::2/64"
+      - endpoints: ["R3:eth2", "R8:eth1"]
+        vars:
+          R3_ipv4: "10.200.6.1/30"
+          R8_ipv4: "10.200.6.2/30"
+          R3_ipv6: "2001:db8:ffff:6::1/64"
+          R8_ipv6: "2001:db8:ffff:6::2/64"
+      - endpoints: ["R4:eth1", "R8:eth2"]
+        vars:
+          R4_ipv4: "10.200.7.1/30"
+          R8_ipv4: "10.200.7.2/30"
+          R4_ipv6: "2001:db8:ffff:7::1/64"
+          R8_ipv6: "2001:db8:ffff:7::2/64"
+      - endpoints: ["R4:eth2", "R9:eth1"]
+        vars:
+          R4_ipv4: "10.200.8.1/30"
+          R9_ipv4: "10.200.8.2/30"
+          R4_ipv6: "2001:db8:ffff:8::1/64"
+          R9_ipv6: "2001:db8:ffff:8::2/64"
+      - endpoints: ["R5:eth2", "R6:eth3"]
+        vars:
+          R5_ipv4: "10.200.9.1/30"
+          R6_ipv4: "10.200.9.2/30"
+          R5_ipv6: "2001:db8:ffff:9::1/64"
+          R6_ipv6: "2001:db8:ffff:9::2/64"
+      - endpoints: ["R6:eth4", "R7:eth3"]
+        vars:
+          R6_ipv4: "10.200.10.1/30"
+          R7_ipv4: "10.200.10.2/30"
+          R6_ipv6: "2001:db8:ffff:a::1/64"
+          R7_ipv6: "2001:db8:ffff:a::2/64"
+      - endpoints: ["R7:eth4", "R8:eth3"]
+        vars:
+          R7_ipv4: "10.200.11.1/30"
+          R8_ipv4: "10.200.11.2/30"
+          R7_ipv6: "2001:db8:ffff:b::1/64"
+          R8_ipv6: "2001:db8:ffff:b::2/64"
+      - endpoints: ["R8:eth4", "R9:eth2"]
+        vars:
+          R8_ipv4: "10.200.12.1/30"
+          R9_ipv4: "10.200.12.2/30"
+          R8_ipv6: "2001:db8:ffff:c::1/64"
+          R9_ipv6: "2001:db8:ffff:c::2/64"
+      - endpoints: ["R5:eth3", "R46:eth1"]
+        vars:
+          R5_ipv4: "10.200.13.1/30"
+          R46_ipv4: "10.200.13.2/30"
+          R5_ipv6: "2001:db8:ffff:d::1/64"
+          R46_ipv6: "2001:db8:ffff:d::2/64"
+      - endpoints: ["R6:eth5", "R52:eth1"]
+        vars:
+          R6_ipv4: "10.200.14.1/30"
+          R52_ipv4: "10.200.14.2/30"
+          R6_ipv6: "2001:db8:ffff:e::1/64"
+          R52_ipv6: "2001:db8:ffff:e::2/64"
+      - endpoints: ["R7:eth5", "R58:eth1"]
+        vars:
+          R7_ipv4: "10.200.15.1/30"
+          R58_ipv4: "10.200.15.2/30"
+          R7_ipv6: "2001:db8:ffff:f::1/64"
+          R58_ipv6: "2001:db8:ffff:f::2/64"
+      - endpoints: ["R8:eth5", "R64:eth1"]
+        vars:
+          R8_ipv4: "10.200.16.1/30"
+          R64_ipv4: "10.200.16.2/30"
+          R8_ipv6: "2001:db8:ffff:10::1/64"
+          R64_ipv6: "2001:db8:ffff:10::2/64"
+      - endpoints: ["R9:eth3", "R70:eth1"]
+        vars:
+          R9_ipv4: "10.200.17.1/30"
+          R70_ipv4: "10.200.17.2/30"
+          R9_ipv6: "2001:db8:ffff:11::1/64"
+          R70_ipv6: "2001:db8:ffff:11::2/64"
+      - endpoints: ["R46:eth2", "R52:eth2"]
+        vars:
+          R46_ipv4: "10.200.18.1/30"
+          R52_ipv4: "10.200.18.2/30"
+          R46_ipv6: "2001:db8:ffff:12::1/64"
+          R52_ipv6: "2001:db8:ffff:12::2/64"
+      - endpoints: ["R52:eth3", "R58:eth2"]
+        vars:
+          R52_ipv4: "10.200.19.1/30"
+          R58_ipv4: "10.200.19.2/30"
+          R52_ipv6: "2001:db8:ffff:13::1/64"
+          R58_ipv6: "2001:db8:ffff:13::2/64"
+      - endpoints: ["R58:eth3", "R64:eth2"]
+        vars:
+          R58_ipv4: "10.200.20.1/30"
+          R64_ipv4: "10.200.20.2/30"
+          R58_ipv6: "2001:db8:ffff:14::1/64"
+          R64_ipv6: "2001:db8:ffff:14::2/64"
+      - endpoints: ["R64:eth3", "R70:eth2"]
+        vars:
+          R64_ipv4: "10.200.21.1/30"
+          R70_ipv4: "10.200.21.2/30"
+          R64_ipv6: "2001:db8:ffff:15::1/64"
+          R70_ipv6: "2001:db8:ffff:15::2/64"
+      - endpoints: ["R70:eth3", "R76:eth1"]
+        vars:
+          R70_ipv4: "10.200.22.1/30"
+          R76_ipv4: "10.200.22.2/30"
+          R70_ipv6: "2001:db8:ffff:16::1/64"
+          R76_ipv6: "2001:db8:ffff:16::2/64"
+      - endpoints: ["R76:eth2", "R82:eth1"]
+        vars:
+          R76_ipv4: "10.200.23.1/30"
+          R82_ipv4: "10.200.23.2/30"
+          R76_ipv6: "2001:db8:ffff:17::1/64"
+          R82_ipv6: "2001:db8:ffff:17::2/64"
+      - endpoints: ["R46:eth3", "R88:eth1"]
+        vars:
+          R46_ipv4: "10.200.24.1/30"
+          R88_ipv4: "10.200.24.2/30"
+          R46_ipv6: "2001:db8:ffff:18::1/64"
+          R88_ipv6: "2001:db8:ffff:18::2/64"
+      - endpoints: ["R52:eth4", "R90:eth1"]
+        vars:
+          R52_ipv4: "10.200.25.1/30"
+          R90_ipv4: "10.200.25.2/30"
+          R52_ipv6: "2001:db8:ffff:19::1/64"
+          R90_ipv6: "2001:db8:ffff:19::2/64"
+      - endpoints: ["R58:eth4", "R92:eth1"]
+        vars:
+          R58_ipv4: "10.200.26.1/30"
+          R92_ipv4: "10.200.26.2/30"
+          R58_ipv6: "2001:db8:ffff:1a::1/64"
+          R92_ipv6: "2001:db8:ffff:1a::2/64"
+      - endpoints: ["R64:eth4", "R94:eth1"]
+        vars:
+          R64_ipv4: "10.200.27.1/30"
+          R94_ipv4: "10.200.27.2/30"
+          R64_ipv6: "2001:db8:ffff:1b::1/64"
+          R94_ipv6: "2001:db8:ffff:1b::2/64"
+      - endpoints: ["R70:eth4", "R96:eth1"]
+        vars:
+          R70_ipv4: "10.200.28.1/30"
+          R96_ipv4: "10.200.28.2/30"
+          R70_ipv6: "2001:db8:ffff:1c::1/64"
+          R96_ipv6: "2001:db8:ffff:1c::2/64"
+      - endpoints: ["R46:eth4", "R116:eth1"]
+        vars:
+          R46_ipv4: "10.200.29.1/30"
+          R116_ipv4: "10.200.29.2/30"
+          R46_ipv6: "2001:db8:ffff:1d::1/64"
+          R116_ipv6: "2001:db8:ffff:1d::2/64"
+      - endpoints: ["R52:eth5", "R118:eth1"]
+        vars:
+          R52_ipv4: "10.200.30.1/30"
+          R118_ipv4: "10.200.30.2/30"
+          R52_ipv6: "2001:db8:ffff:1e::1/64"
+          R118_ipv6: "2001:db8:ffff:1e::2/64"
+      - endpoints: ["R58:eth5", "R120:eth1"]
+        vars:
+          R58_ipv4: "10.200.31.1/30"
+          R120_ipv4: "10.200.31.2/30"
+          R58_ipv6: "2001:db8:ffff:1f::1/64"
+          R120_ipv6: "2001:db8:ffff:1f::2/64"
+      - endpoints: ["R64:eth5", "R122:eth1"]
+        vars:
+          R64_ipv4: "10.200.32.1/30"
+          R122_ipv4: "10.200.32.2/30"
+          R64_ipv6: "2001:db8:ffff:20::1/64"
+          R122_ipv6: "2001:db8:ffff:20::2/64"
+      - endpoints: ["R116:eth2", "R124:eth1"]
+        vars:
+          R116_ipv4: "10.200.33.1/30"
+          R124_ipv4: "10.200.33.2/30"
+          R116_ipv6: "2001:db8:ffff:21::1/64"
+          R124_ipv6: "2001:db8:ffff:21::2/64"
+      - endpoints: ["R118:eth2", "R126:eth1"]
+        vars:
+          R118_ipv4: "10.200.34.1/30"
+          R126_ipv4: "10.200.34.2/30"
+          R118_ipv6: "2001:db8:ffff:22::1/64"
+          R126_ipv6: "2001:db8:ffff:22::2/64"
+      - endpoints: ["R120:eth2", "R127:eth1"]
+        vars:
+          R120_ipv4: "10.200.35.1/30"
+          R127_ipv4: "10.200.35.2/30"
+          R120_ipv6: "2001:db8:ffff:23::1/64"
+          R127_ipv6: "2001:db8:ffff:23::2/64"
+      - endpoints: ["R122:eth2", "R125:eth1"]
+        vars:
+          R122_ipv4: "10.200.36.1/30"
+          R125_ipv4: "10.200.36.2/30"
+          R122_ipv6: "2001:db8:ffff:24::1/64"
+          R125_ipv6: "2001:db8:ffff:24::2/64"
+      - endpoints: ["TREX_01:eth1", "R1:eth3"]
+      - endpoints: ["TREX_02:eth1", "R2:eth3"]
+      - endpoints: ["TREX_03:eth1", "R5:eth4"]
+      - endpoints: ["TREX_04:eth1", "R9:eth4"]

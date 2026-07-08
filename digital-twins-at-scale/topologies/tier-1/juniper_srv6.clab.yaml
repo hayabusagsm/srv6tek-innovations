@@ -1,0 +1,868 @@
+# ==============================================================================
+# SRv6TEK Innovations - Final Unified Production Topology Manifest
+# Topology: TIER-1 | Technology: SRV6 | Profile: JUNIPER
+# ==============================================================================
+name: srv6tek-tier-1-juniper-srv6
+mgmt:
+  network: mgt_net
+  ipv4-subnet: 172.20.20.0/24
+  ipv6-subnet: 2001:172:20:20::/80
+
+topology:
+  kinds:
+    cisco_xrd:
+      image: ios-xr/xrd-control-plane:25.2.2
+      restart-policy: "no"
+    juniper_cjunosevolved:
+      image: cjunosevolved:25.4r1.13-evo
+      restart-policy: "no"
+    juniper_crpd:
+      image: crpd:25.4R1.12
+      restart-policy: "no"
+
+  nodes:
+    R1:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.1
+      mgmt-ipv6: 2001:172:20:20::1
+      startup-config: compiled-configs/srv6/juniper_R1.cfg
+    R2:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.2
+      mgmt-ipv6: 2001:172:20:20::2
+      startup-config: compiled-configs/srv6/juniper_R2.cfg
+    R3:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.3
+      mgmt-ipv6: 2001:172:20:20::3
+      startup-config: compiled-configs/srv6/juniper_R3.cfg
+    R4:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.4
+      mgmt-ipv6: 2001:172:20:20::4
+      startup-config: compiled-configs/srv6/juniper_R4.cfg
+    R5:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.5
+      mgmt-ipv6: 2001:172:20:20::5
+      startup-config: compiled-configs/srv6/juniper_R5.cfg
+    R6:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.6
+      mgmt-ipv6: 2001:172:20:20::6
+      startup-config: compiled-configs/srv6/juniper_R6.cfg
+    R7:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.7
+      mgmt-ipv6: 2001:172:20:20::7
+      startup-config: compiled-configs/srv6/juniper_R7.cfg
+    R8:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.8
+      mgmt-ipv6: 2001:172:20:20::8
+      startup-config: compiled-configs/srv6/juniper_R8.cfg
+    R9:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.9
+      mgmt-ipv6: 2001:172:20:20::9
+      startup-config: compiled-configs/srv6/juniper_R9.cfg
+    R10:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.10
+      mgmt-ipv6: 2001:172:20:20::10
+      startup-config: compiled-configs/srv6/juniper_R10.cfg
+    R11:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.11
+      mgmt-ipv6: 2001:172:20:20::11
+      startup-config: compiled-configs/srv6/juniper_R11.cfg
+    R12:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.12
+      mgmt-ipv6: 2001:172:20:20::12
+      startup-config: compiled-configs/srv6/juniper_R12.cfg
+    R13:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.13
+      mgmt-ipv6: 2001:172:20:20::13
+      startup-config: compiled-configs/srv6/juniper_R13.cfg
+    R14:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.14
+      mgmt-ipv6: 2001:172:20:20::14
+      startup-config: compiled-configs/srv6/juniper_R14.cfg
+    R15:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.15
+      mgmt-ipv6: 2001:172:20:20::15
+      startup-config: compiled-configs/srv6/juniper_R15.cfg
+    R16:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.16
+      mgmt-ipv6: 2001:172:20:20::16
+      startup-config: compiled-configs/srv6/juniper_R16.cfg
+    R17:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.17
+      mgmt-ipv6: 2001:172:20:20::17
+      startup-config: compiled-configs/srv6/juniper_R17.cfg
+    R18:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.18
+      mgmt-ipv6: 2001:172:20:20::18
+      startup-config: compiled-configs/srv6/juniper_R18.cfg
+    R19:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.19
+      mgmt-ipv6: 2001:172:20:20::19
+      startup-config: compiled-configs/srv6/juniper_R19.cfg
+    R20:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.20
+      mgmt-ipv6: 2001:172:20:20::20
+      startup-config: compiled-configs/srv6/juniper_R20.cfg
+    R21:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.21
+      mgmt-ipv6: 2001:172:20:20::21
+      startup-config: compiled-configs/srv6/juniper_R21.cfg
+    R22:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.22
+      mgmt-ipv6: 2001:172:20:20::22
+      startup-config: compiled-configs/srv6/juniper_R22.cfg
+    R23:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.23
+      mgmt-ipv6: 2001:172:20:20::23
+      startup-config: compiled-configs/srv6/juniper_R23.cfg
+    R24:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.24
+      mgmt-ipv6: 2001:172:20:20::24
+      startup-config: compiled-configs/srv6/juniper_R24.cfg
+    R25:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.25
+      mgmt-ipv6: 2001:172:20:20::25
+      startup-config: compiled-configs/srv6/juniper_R25.cfg
+    R26:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.26
+      mgmt-ipv6: 2001:172:20:20::26
+      startup-config: compiled-configs/srv6/juniper_R26.cfg
+    R27:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.27
+      mgmt-ipv6: 2001:172:20:20::27
+      startup-config: compiled-configs/srv6/juniper_R27.cfg
+    R28:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.28
+      mgmt-ipv6: 2001:172:20:20::28
+      startup-config: compiled-configs/srv6/juniper_R28.cfg
+    R29:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.29
+      mgmt-ipv6: 2001:172:20:20::29
+      startup-config: compiled-configs/srv6/juniper_R29.cfg
+    R30:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.30
+      mgmt-ipv6: 2001:172:20:20::30
+      startup-config: compiled-configs/srv6/juniper_R30.cfg
+    R31:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.31
+      mgmt-ipv6: 2001:172:20:20::31
+      startup-config: compiled-configs/srv6/juniper_R31.cfg
+    R32:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.32
+      mgmt-ipv6: 2001:172:20:20::32
+      startup-config: compiled-configs/srv6/juniper_R32.cfg
+    R33:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.33
+      mgmt-ipv6: 2001:172:20:20::33
+      startup-config: compiled-configs/srv6/juniper_R33.cfg
+    R34:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.34
+      mgmt-ipv6: 2001:172:20:20::34
+      startup-config: compiled-configs/srv6/juniper_R34.cfg
+    R35:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.35
+      mgmt-ipv6: 2001:172:20:20::35
+      startup-config: compiled-configs/srv6/juniper_R35.cfg
+    R36:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.36
+      mgmt-ipv6: 2001:172:20:20::36
+      startup-config: compiled-configs/srv6/juniper_R36.cfg
+    R37:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.37
+      mgmt-ipv6: 2001:172:20:20::37
+      startup-config: compiled-configs/srv6/juniper_R37.cfg
+    R38:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.38
+      mgmt-ipv6: 2001:172:20:20::38
+      startup-config: compiled-configs/srv6/juniper_R38.cfg
+    R39:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.39
+      mgmt-ipv6: 2001:172:20:20::39
+      startup-config: compiled-configs/srv6/juniper_R39.cfg
+    R40:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.40
+      mgmt-ipv6: 2001:172:20:20::40
+      startup-config: compiled-configs/srv6/juniper_R40.cfg
+    R41:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.41
+      mgmt-ipv6: 2001:172:20:20::41
+      startup-config: compiled-configs/srv6/juniper_R41.cfg
+    R42:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.42
+      mgmt-ipv6: 2001:172:20:20::42
+      startup-config: compiled-configs/srv6/juniper_R42.cfg
+    R43:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.43
+      mgmt-ipv6: 2001:172:20:20::43
+      startup-config: compiled-configs/srv6/juniper_R43.cfg
+    R44:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.44
+      mgmt-ipv6: 2001:172:20:20::44
+      startup-config: compiled-configs/srv6/juniper_R44.cfg
+    R45:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.45
+      mgmt-ipv6: 2001:172:20:20::45
+      startup-config: compiled-configs/srv6/juniper_R45.cfg
+    R46:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.46
+      mgmt-ipv6: 2001:172:20:20::46
+      startup-config: compiled-configs/srv6/juniper_R46.cfg
+    R47:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.47
+      mgmt-ipv6: 2001:172:20:20::47
+      startup-config: compiled-configs/srv6/juniper_R47.cfg
+    R48:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.48
+      mgmt-ipv6: 2001:172:20:20::48
+      startup-config: compiled-configs/srv6/juniper_R48.cfg
+    R49:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.49
+      mgmt-ipv6: 2001:172:20:20::49
+      startup-config: compiled-configs/srv6/juniper_R49.cfg
+    R50:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.50
+      mgmt-ipv6: 2001:172:20:20::50
+      startup-config: compiled-configs/srv6/juniper_R50.cfg
+    R51:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.51
+      mgmt-ipv6: 2001:172:20:20::51
+      startup-config: compiled-configs/srv6/juniper_R51.cfg
+    R52:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.52
+      mgmt-ipv6: 2001:172:20:20::52
+      startup-config: compiled-configs/srv6/juniper_R52.cfg
+    R53:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.53
+      mgmt-ipv6: 2001:172:20:20::53
+      startup-config: compiled-configs/srv6/juniper_R53.cfg
+    R54:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.54
+      mgmt-ipv6: 2001:172:20:20::54
+      startup-config: compiled-configs/srv6/juniper_R54.cfg
+    R55:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.55
+      mgmt-ipv6: 2001:172:20:20::55
+      startup-config: compiled-configs/srv6/juniper_R55.cfg
+    R56:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.56
+      mgmt-ipv6: 2001:172:20:20::56
+      startup-config: compiled-configs/srv6/juniper_R56.cfg
+    R57:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.57
+      mgmt-ipv6: 2001:172:20:20::57
+      startup-config: compiled-configs/srv6/juniper_R57.cfg
+    R58:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.58
+      mgmt-ipv6: 2001:172:20:20::58
+      startup-config: compiled-configs/srv6/juniper_R58.cfg
+    R59:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.59
+      mgmt-ipv6: 2001:172:20:20::59
+      startup-config: compiled-configs/srv6/juniper_R59.cfg
+    R60:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.60
+      mgmt-ipv6: 2001:172:20:20::60
+      startup-config: compiled-configs/srv6/juniper_R60.cfg
+    R61:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.61
+      mgmt-ipv6: 2001:172:20:20::61
+      startup-config: compiled-configs/srv6/juniper_R61.cfg
+    R62:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.62
+      mgmt-ipv6: 2001:172:20:20::62
+      startup-config: compiled-configs/srv6/juniper_R62.cfg
+    R63:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.63
+      mgmt-ipv6: 2001:172:20:20::63
+      startup-config: compiled-configs/srv6/juniper_R63.cfg
+    R64:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.64
+      mgmt-ipv6: 2001:172:20:20::64
+      startup-config: compiled-configs/srv6/juniper_R64.cfg
+    R65:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.65
+      mgmt-ipv6: 2001:172:20:20::65
+      startup-config: compiled-configs/srv6/juniper_R65.cfg
+    R66:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.66
+      mgmt-ipv6: 2001:172:20:20::66
+      startup-config: compiled-configs/srv6/juniper_R66.cfg
+    R67:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.67
+      mgmt-ipv6: 2001:172:20:20::67
+      startup-config: compiled-configs/srv6/juniper_R67.cfg
+    R68:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.68
+      mgmt-ipv6: 2001:172:20:20::68
+      startup-config: compiled-configs/srv6/juniper_R68.cfg
+    R69:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.69
+      mgmt-ipv6: 2001:172:20:20::69
+      startup-config: compiled-configs/srv6/juniper_R69.cfg
+    R70:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.70
+      mgmt-ipv6: 2001:172:20:20::70
+      startup-config: compiled-configs/srv6/juniper_R70.cfg
+    R71:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.71
+      mgmt-ipv6: 2001:172:20:20::71
+      startup-config: compiled-configs/srv6/juniper_R71.cfg
+    R72:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.72
+      mgmt-ipv6: 2001:172:20:20::72
+      startup-config: compiled-configs/srv6/juniper_R72.cfg
+    R73:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.73
+      mgmt-ipv6: 2001:172:20:20::73
+      startup-config: compiled-configs/srv6/juniper_R73.cfg
+    R74:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.74
+      mgmt-ipv6: 2001:172:20:20::74
+      startup-config: compiled-configs/srv6/juniper_R74.cfg
+    R75:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.75
+      mgmt-ipv6: 2001:172:20:20::75
+      startup-config: compiled-configs/srv6/juniper_R75.cfg
+    R76:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.76
+      mgmt-ipv6: 2001:172:20:20::76
+      startup-config: compiled-configs/srv6/juniper_R76.cfg
+    R77:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.77
+      mgmt-ipv6: 2001:172:20:20::77
+      startup-config: compiled-configs/srv6/juniper_R77.cfg
+    R78:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.78
+      mgmt-ipv6: 2001:172:20:20::78
+      startup-config: compiled-configs/srv6/juniper_R78.cfg
+    R79:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.79
+      mgmt-ipv6: 2001:172:20:20::79
+      startup-config: compiled-configs/srv6/juniper_R79.cfg
+    R80:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.80
+      mgmt-ipv6: 2001:172:20:20::80
+      startup-config: compiled-configs/srv6/juniper_R80.cfg
+    R81:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.81
+      mgmt-ipv6: 2001:172:20:20::81
+      startup-config: compiled-configs/srv6/juniper_R81.cfg
+    R82:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.82
+      mgmt-ipv6: 2001:172:20:20::82
+      startup-config: compiled-configs/srv6/juniper_R82.cfg
+    R83:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.83
+      mgmt-ipv6: 2001:172:20:20::83
+      startup-config: compiled-configs/srv6/juniper_R83.cfg
+    R84:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.84
+      mgmt-ipv6: 2001:172:20:20::84
+      startup-config: compiled-configs/srv6/juniper_R84.cfg
+    R85:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.85
+      mgmt-ipv6: 2001:172:20:20::85
+      startup-config: compiled-configs/srv6/juniper_R85.cfg
+    R86:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.86
+      mgmt-ipv6: 2001:172:20:20::86
+      startup-config: compiled-configs/srv6/juniper_R86.cfg
+    R87:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.87
+      mgmt-ipv6: 2001:172:20:20::87
+      startup-config: compiled-configs/srv6/juniper_R87.cfg
+    R88:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.88
+      mgmt-ipv6: 2001:172:20:20::88
+      startup-config: compiled-configs/srv6/juniper_R88.cfg
+    R89:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.89
+      mgmt-ipv6: 2001:172:20:20::89
+      startup-config: compiled-configs/srv6/juniper_R89.cfg
+    R90:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.90
+      mgmt-ipv6: 2001:172:20:20::90
+      startup-config: compiled-configs/srv6/juniper_R90.cfg
+    R91:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.91
+      mgmt-ipv6: 2001:172:20:20::91
+      startup-config: compiled-configs/srv6/juniper_R91.cfg
+    R92:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.92
+      mgmt-ipv6: 2001:172:20:20::92
+      startup-config: compiled-configs/srv6/juniper_R92.cfg
+    R93:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.93
+      mgmt-ipv6: 2001:172:20:20::93
+      startup-config: compiled-configs/srv6/juniper_R93.cfg
+    R94:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.94
+      mgmt-ipv6: 2001:172:20:20::94
+      startup-config: compiled-configs/srv6/juniper_R94.cfg
+    R95:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.95
+      mgmt-ipv6: 2001:172:20:20::95
+      startup-config: compiled-configs/srv6/juniper_R95.cfg
+    R96:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.96
+      mgmt-ipv6: 2001:172:20:20::96
+      startup-config: compiled-configs/srv6/juniper_R96.cfg
+    R97:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.97
+      mgmt-ipv6: 2001:172:20:20::97
+      startup-config: compiled-configs/srv6/juniper_R97.cfg
+    R98:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.98
+      mgmt-ipv6: 2001:172:20:20::98
+      startup-config: compiled-configs/srv6/juniper_R98.cfg
+    R99:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.99
+      mgmt-ipv6: 2001:172:20:20::99
+      startup-config: compiled-configs/srv6/juniper_R99.cfg
+    R100:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.100
+      mgmt-ipv6: 2001:172:20:20::100
+      startup-config: compiled-configs/srv6/juniper_R100.cfg
+    R101:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.101
+      mgmt-ipv6: 2001:172:20:20::101
+      startup-config: compiled-configs/srv6/juniper_R101.cfg
+    R102:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.102
+      mgmt-ipv6: 2001:172:20:20::102
+      startup-config: compiled-configs/srv6/juniper_R102.cfg
+    R103:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.103
+      mgmt-ipv6: 2001:172:20:20::103
+      startup-config: compiled-configs/srv6/juniper_R103.cfg
+    R104:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.104
+      mgmt-ipv6: 2001:172:20:20::104
+      startup-config: compiled-configs/srv6/juniper_R104.cfg
+    R105:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.105
+      mgmt-ipv6: 2001:172:20:20::105
+      startup-config: compiled-configs/srv6/juniper_R105.cfg
+    R106:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.106
+      mgmt-ipv6: 2001:172:20:20::106
+      startup-config: compiled-configs/srv6/juniper_R106.cfg
+    R107:
+      kind: juniper_cjunosevolved
+      mgmt-ipv4: 172.20.20.107
+      mgmt-ipv6: 2001:172:20:20::107
+      startup-config: compiled-configs/srv6/juniper_R107.cfg
+    R108:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.108
+      mgmt-ipv6: 2001:172:20:20::108
+      startup-config: compiled-configs/srv6/juniper_R108.cfg
+    R109:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.109
+      mgmt-ipv6: 2001:172:20:20::109
+      startup-config: compiled-configs/srv6/juniper_R109.cfg
+    R110:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.110
+      mgmt-ipv6: 2001:172:20:20::110
+      startup-config: compiled-configs/srv6/juniper_R110.cfg
+    R111:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.111
+      mgmt-ipv6: 2001:172:20:20::111
+      startup-config: compiled-configs/srv6/juniper_R111.cfg
+    R112:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.112
+      mgmt-ipv6: 2001:172:20:20::112
+      startup-config: compiled-configs/srv6/juniper_R112.cfg
+    R113:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.113
+      mgmt-ipv6: 2001:172:20:20::113
+      startup-config: compiled-configs/srv6/juniper_R113.cfg
+    R114:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.114
+      mgmt-ipv6: 2001:172:20:20::114
+      startup-config: compiled-configs/srv6/juniper_R114.cfg
+    R115:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.115
+      mgmt-ipv6: 2001:172:20:20::115
+      startup-config: compiled-configs/srv6/juniper_R115.cfg
+    R116:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.116
+      mgmt-ipv6: 2001:172:20:20::116
+      startup-config: compiled-configs/srv6/juniper_R116.cfg
+    R117:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.117
+      mgmt-ipv6: 2001:172:20:20::117
+      startup-config: compiled-configs/srv6/juniper_R117.cfg
+    R118:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.118
+      mgmt-ipv6: 2001:172:20:20::118
+      startup-config: compiled-configs/srv6/juniper_R118.cfg
+    R119:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.119
+      mgmt-ipv6: 2001:172:20:20::119
+      startup-config: compiled-configs/srv6/juniper_R119.cfg
+    R120:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.120
+      mgmt-ipv6: 2001:172:20:20::120
+      startup-config: compiled-configs/srv6/juniper_R120.cfg
+    R121:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.121
+      mgmt-ipv6: 2001:172:20:20::121
+      startup-config: compiled-configs/srv6/juniper_R121.cfg
+    R122:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.122
+      mgmt-ipv6: 2001:172:20:20::122
+      startup-config: compiled-configs/srv6/juniper_R122.cfg
+    R123:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.123
+      mgmt-ipv6: 2001:172:20:20::123
+      startup-config: compiled-configs/srv6/juniper_R123.cfg
+    R124:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.124
+      mgmt-ipv6: 2001:172:20:20::124
+      startup-config: compiled-configs/srv6/juniper_R124.cfg
+    R125:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.125
+      mgmt-ipv6: 2001:172:20:20::125
+      startup-config: compiled-configs/srv6/juniper_R125.cfg
+    R126:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.126
+      mgmt-ipv6: 2001:172:20:20::126
+      startup-config: compiled-configs/srv6/juniper_R126.cfg
+    R127:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.127
+      mgmt-ipv6: 2001:172:20:20::127
+      startup-config: compiled-configs/srv6/juniper_R127.cfg
+    R128:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.128
+      mgmt-ipv6: 2001:172:20:20::128
+      startup-config: compiled-configs/srv6/juniper_R128.cfg
+    R129:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.129
+      mgmt-ipv6: 2001:172:20:20::129
+      startup-config: compiled-configs/srv6/juniper_R129.cfg
+    R130:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.130
+      mgmt-ipv6: 2001:172:20:20::130
+      startup-config: compiled-configs/srv6/juniper_R130.cfg
+    R131:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.131
+      mgmt-ipv6: 2001:172:20:20::131
+      startup-config: compiled-configs/srv6/juniper_R131.cfg
+    R132:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.132
+      mgmt-ipv6: 2001:172:20:20::132
+      startup-config: compiled-configs/srv6/juniper_R132.cfg
+    R133:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.133
+      mgmt-ipv6: 2001:172:20:20::133
+      startup-config: compiled-configs/srv6/juniper_R133.cfg
+    R134:
+      kind: juniper_crpd
+      mgmt-ipv4: 172.20.20.134
+      mgmt-ipv6: 2001:172:20:20::134
+      startup-config: compiled-configs/srv6/juniper_R134.cfg
+
+  links:
+      - endpoints: ["R1:eth1", "R2:eth1"]
+      - endpoints: ["R1:eth2", "R3:eth1"]
+      - endpoints: ["R1:eth3", "R4:eth1"]
+      - endpoints: ["R2:eth2", "R3:eth2"]
+      - endpoints: ["R2:eth3", "R4:eth2"]
+      - endpoints: ["R5:eth1", "R6:eth1"]
+      - endpoints: ["R5:eth2", "R7:eth1"]
+      - endpoints: ["R5:eth3", "R8:eth1"]
+      - endpoints: ["R6:eth2", "R7:eth2"]
+      - endpoints: ["R6:eth3", "R8:eth2"]
+      - endpoints: ["R9:eth1", "R10:eth1"]
+      - endpoints: ["R9:eth2", "R11:eth1"]
+      - endpoints: ["R9:eth3", "R12:eth1"]
+      - endpoints: ["R10:eth2", "R11:eth2"]
+      - endpoints: ["R10:eth3", "R12:eth2"]
+      - endpoints: ["R13:eth1", "R14:eth1"]
+      - endpoints: ["R13:eth2", "R15:eth1"]
+      - endpoints: ["R13:eth3", "R16:eth1"]
+      - endpoints: ["R14:eth2", "R15:eth2"]
+      - endpoints: ["R14:eth3", "R16:eth2"]
+      - endpoints: ["R17:eth1", "R18:eth1"]
+      - endpoints: ["R17:eth2", "R19:eth1"]
+      - endpoints: ["R17:eth3", "R20:eth1"]
+      - endpoints: ["R18:eth2", "R19:eth2"]
+      - endpoints: ["R18:eth3", "R20:eth2"]
+      - endpoints: ["R21:eth1", "R22:eth1"]
+      - endpoints: ["R21:eth2", "R23:eth1"]
+      - endpoints: ["R21:eth3", "R24:eth1"]
+      - endpoints: ["R22:eth2", "R23:eth2"]
+      - endpoints: ["R22:eth3", "R24:eth2"]
+      - endpoints: ["R25:eth1", "R26:eth1"]
+      - endpoints: ["R25:eth2", "R27:eth1"]
+      - endpoints: ["R25:eth3", "R28:eth1"]
+      - endpoints: ["R26:eth2", "R27:eth2"]
+      - endpoints: ["R26:eth3", "R28:eth2"]
+      - endpoints: ["R29:eth1", "R30:eth1"]
+      - endpoints: ["R29:eth2", "R31:eth1"]
+      - endpoints: ["R29:eth3", "R32:eth1"]
+      - endpoints: ["R30:eth2", "R31:eth2"]
+      - endpoints: ["R30:eth3", "R32:eth2"]
+      - endpoints: ["R33:eth1", "R34:eth1"]
+      - endpoints: ["R33:eth2", "R35:eth1"]
+      - endpoints: ["R33:eth3", "R36:eth1"]
+      - endpoints: ["R34:eth2", "R35:eth2"]
+      - endpoints: ["R34:eth3", "R36:eth2"]
+      - endpoints: ["R37:eth1", "R38:eth1"]
+      - endpoints: ["R37:eth2", "R39:eth1"]
+      - endpoints: ["R37:eth3", "R40:eth1"]
+      - endpoints: ["R38:eth2", "R39:eth2"]
+      - endpoints: ["R38:eth3", "R40:eth2"]
+      - endpoints: ["R41:eth1", "R42:eth1"]
+      - endpoints: ["R41:eth2", "R43:eth1"]
+      - endpoints: ["R41:eth3", "R44:eth1"]
+      - endpoints: ["R42:eth2", "R43:eth2"]
+      - endpoints: ["R42:eth3", "R44:eth2"]
+      - endpoints: ["R45:eth1", "R46:eth1"]
+      - endpoints: ["R45:eth2", "R47:eth1"]
+      - endpoints: ["R45:eth3", "R48:eth1"]
+      - endpoints: ["R46:eth2", "R47:eth2"]
+      - endpoints: ["R46:eth3", "R48:eth2"]
+      - endpoints: ["R49:eth1", "R50:eth1"]
+      - endpoints: ["R49:eth2", "R51:eth1"]
+      - endpoints: ["R49:eth3", "R52:eth1"]
+      - endpoints: ["R50:eth2", "R51:eth2"]
+      - endpoints: ["R50:eth3", "R52:eth2"]
+      - endpoints: ["R53:eth1", "R54:eth1"]
+      - endpoints: ["R53:eth2", "R55:eth1"]
+      - endpoints: ["R53:eth3", "R56:eth1"]
+      - endpoints: ["R54:eth2", "R55:eth2"]
+      - endpoints: ["R54:eth3", "R56:eth2"]
+      - endpoints: ["R57:eth1", "R58:eth1"]
+      - endpoints: ["R57:eth2", "R59:eth1"]
+      - endpoints: ["R57:eth3", "R60:eth1"]
+      - endpoints: ["R58:eth2", "R59:eth2"]
+      - endpoints: ["R58:eth3", "R60:eth2"]
+      - endpoints: ["R61:eth1", "R62:eth1"]
+      - endpoints: ["R61:eth2", "R63:eth1"]
+      - endpoints: ["R61:eth3", "R64:eth1"]
+      - endpoints: ["R62:eth2", "R63:eth2"]
+      - endpoints: ["R62:eth3", "R64:eth2"]
+      - endpoints: ["R65:eth1", "R66:eth1"]
+      - endpoints: ["R65:eth2", "R67:eth1"]
+      - endpoints: ["R65:eth3", "R68:eth1"]
+      - endpoints: ["R66:eth2", "R67:eth2"]
+      - endpoints: ["R66:eth3", "R68:eth2"]
+      - endpoints: ["R69:eth1", "R70:eth1"]
+      - endpoints: ["R69:eth2", "R71:eth1"]
+      - endpoints: ["R69:eth3", "R72:eth1"]
+      - endpoints: ["R70:eth2", "R71:eth2"]
+      - endpoints: ["R70:eth3", "R72:eth2"]
+      - endpoints: ["R73:eth1", "R74:eth1"]
+      - endpoints: ["R73:eth2", "R75:eth1"]
+      - endpoints: ["R73:eth3", "R76:eth1"]
+      - endpoints: ["R74:eth2", "R75:eth2"]
+      - endpoints: ["R74:eth3", "R76:eth2"]
+      - endpoints: ["R77:eth1", "R78:eth1"]
+      - endpoints: ["R77:eth2", "R79:eth1"]
+      - endpoints: ["R77:eth3", "R80:eth1"]
+      - endpoints: ["R78:eth2", "R79:eth2"]
+      - endpoints: ["R78:eth3", "R80:eth2"]
+      - endpoints: ["R81:eth1", "R82:eth1"]
+      - endpoints: ["R81:eth2", "R83:eth1"]
+      - endpoints: ["R81:eth3", "R84:eth1"]
+      - endpoints: ["R82:eth2", "R83:eth2"]
+      - endpoints: ["R82:eth3", "R84:eth2"]
+      - endpoints: ["R85:eth1", "R86:eth1"]
+      - endpoints: ["R85:eth2", "R87:eth1"]
+      - endpoints: ["R85:eth3", "R88:eth1"]
+      - endpoints: ["R86:eth2", "R87:eth2"]
+      - endpoints: ["R86:eth3", "R88:eth2"]
+      - endpoints: ["R89:eth1", "R90:eth1"]
+      - endpoints: ["R89:eth2", "R91:eth1"]
+      - endpoints: ["R89:eth3", "R92:eth1"]
+      - endpoints: ["R90:eth2", "R91:eth2"]
+      - endpoints: ["R90:eth3", "R92:eth2"]
+      - endpoints: ["R1:eth4", "R5:eth4"]
+      - endpoints: ["R5:eth5", "R9:eth4"]
+      - endpoints: ["R9:eth5", "R13:eth4"]
+      - endpoints: ["R13:eth5", "R17:eth4"]
+      - endpoints: ["R17:eth5", "R21:eth4"]
+      - endpoints: ["R21:eth5", "R25:eth4"]
+      - endpoints: ["R25:eth5", "R29:eth4"]
+      - endpoints: ["R29:eth5", "R33:eth4"]
+      - endpoints: ["R33:eth5", "R37:eth4"]
+      - endpoints: ["R37:eth5", "R41:eth4"]
+      - endpoints: ["R45:eth4", "R49:eth4"]
+      - endpoints: ["R49:eth5", "R53:eth4"]
+      - endpoints: ["R53:eth5", "R57:eth4"]
+      - endpoints: ["R57:eth5", "R61:eth4"]
+      - endpoints: ["R61:eth5", "R65:eth4"]
+      - endpoints: ["R69:eth4", "R73:eth4"]
+      - endpoints: ["R73:eth5", "R77:eth4"]
+      - endpoints: ["R77:eth5", "R81:eth4"]
+      - endpoints: ["R81:eth5", "R85:eth4"]
+      - endpoints: ["R85:eth5", "R89:eth4"]
+      - endpoints: ["R5:eth6", "R45:eth5"]
+      - endpoints: ["R41:eth5", "R69:eth5"]
+      - endpoints: ["R1:eth5", "R95:eth1"]
+      - endpoints: ["R5:eth7", "R96:eth1"]
+      - endpoints: ["R9:eth6", "R97:eth1"]
+      - endpoints: ["R13:eth6", "R98:eth1"]
+      - endpoints: ["R17:eth6", "R99:eth1"]
+      - endpoints: ["R21:eth6", "R100:eth1"]
+      - endpoints: ["R25:eth6", "R101:eth1"]
+      - endpoints: ["R29:eth6", "R102:eth1"]
+      - endpoints: ["R33:eth6", "R103:eth1"]
+      - endpoints: ["R37:eth6", "R104:eth1"]
+      - endpoints: ["R41:eth6", "R105:eth1"]
+      - endpoints: ["R45:eth6", "R106:eth1"]
+      - endpoints: ["R49:eth6", "R107:eth1"]
+      - endpoints: ["R3:eth3", "R108:eth1"]
+      - endpoints: ["R7:eth3", "R109:eth1"]
+      - endpoints: ["R11:eth3", "R110:eth1"]
+      - endpoints: ["R15:eth3", "R111:eth1"]
+      - endpoints: ["R19:eth3", "R112:eth1"]
+      - endpoints: ["R23:eth3", "R113:eth1"]
+      - endpoints: ["R27:eth3", "R114:eth1"]
+      - endpoints: ["R31:eth3", "R115:eth1"]
+      - endpoints: ["R35:eth3", "R116:eth1"]
+      - endpoints: ["R39:eth3", "R117:eth1"]
+      - endpoints: ["R43:eth3", "R118:eth1"]
+      - endpoints: ["R47:eth3", "R119:eth1"]
+      - endpoints: ["R51:eth3", "R120:eth1"]
+      - endpoints: ["R55:eth3", "R121:eth1"]
+      - endpoints: ["R59:eth3", "R122:eth1"]
+      - endpoints: ["R63:eth3", "R123:eth1"]
+      - endpoints: ["R67:eth3", "R124:eth1"]
+      - endpoints: ["R71:eth3", "R125:eth1"]
+      - endpoints: ["R75:eth3", "R126:eth1"]
+      - endpoints: ["R79:eth3", "R127:eth1"]
+      - endpoints: ["R83:eth3", "R128:eth1"]
+      - endpoints: ["R87:eth3", "R129:eth1"]
+      - endpoints: ["R91:eth3", "R130:eth1"]
